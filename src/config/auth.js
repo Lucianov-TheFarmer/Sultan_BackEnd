@@ -1,0 +1,5 @@
+const secret = {
+    secret:"33B29743C962E7EDE5750D2612983DB6B856E3EDD1502B8CD410823F4C1CFBF8"
+}
+
+module.exports = secret;
