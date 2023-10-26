@@ -1,52 +1,52 @@
+// Importar Express
 const express = require('express');
 const app = express.Router();
 
-const Modelo = require('../schemas/modelo');
+// Importar Dados para inserção de dados
+const Dados = require('../schemas/Dados');
 const User = require("../schemas/Users");
 
+// Importar Middleware de autenticação
 const AuthMiddleware = require("../middleware/Auth");
 
+// Importar Middleware de upload de imagens
 const upload = require("../middleware/Multer")
 
 //Enviar texto para a página inicial
 app.get("/", (req,res) => {
-    Modelo.find({}).then((modelos) => {
+    Dados.find({}).then((Dados) => {
         res.send("Server online!");
     }).catch((error) => {
         res.status(500).send(error);
     })
 })
 
-// Inserir novas entradas na rota /modelo 
+// Inserir novas entradas na rota /dados 
 // Utilizar verificação middleware de autenticação para permitir a entrada na rota  
-app.post("/modelo", AuthMiddleware, async (req,res) => {
-    const modelo = new Modelo(req.body);
+app.post("/dados", AuthMiddleware, async (req,res) => {
+    const dados = new Dados(req.body);
     try {
-        await modelo.save();
-        res.status(201).send(modelo);
+        await dados.save();
+        res.status(201).send(dados);
     } catch (error) {
         res.status(500).send(error);
     }
-    //Modelo.create(req.body).then((modelo) => {
-    //    res.status(201).send(modelo);
-    //}).catch((error) => {
-    //    res.status(400).send(error);
-    //})
-
+    
     // Inserir multiplas entradas simultaneamente:
-    //Modelo.insertMany(req.body).then((modelos) => {
-    //    res.status(201).send(modelos);
+    //Dados.insertMany(req.body).then((Dados) => {
+    //    res.status(201).send(Dados);
     //}).catch((error) => {
     //    res.status(400).send(error);
     //})
 
 })
 
-// Recuperar todas as entradas da rota /modelo
-app.get("/modelo", async (req,res) => {
+// Recuperar todas as entradas da rota /dados
+app.get("/dados", async (req,res) => {
     try{
-        const modelos = await Modelo.find({})
-        res.status(200).send(modelos)
+        const dados = await Dados.find({})
+        res.status(200).send(dados)
+
         // Definir quais parâmetros recuperar
         // .then(data => {
         //     const projects = data.map(project => {
@@ -64,52 +64,53 @@ app.get("/modelo", async (req,res) => {
         
 })
 
-// Recuperar uma entrada específica da rota /modelo, baseado no id da entrada
-app.get("/modelo/:id", async (req,res) => {
+// Recuperar uma entrada específica da rota /dados, baseado no id da entrada
+app.get("/dados/:id", async (req,res) => {
     try{
-        const modelo = await Modelo.findById(req.params.id);
-        if (!modelo){
+        const dados = await Dados.findById(req.params.id);
+        if (!dados){
             return res.status(404)
         }
-        res.status(200).send(modelo);
+        res.status(200).send(dados);
     } catch(error) {
         res.status(500).send(error);
     }
 
-    // Modelo.findOne({_id: req.params.id}).then((modelo) => {
-    //     if (!modelo) {
+    // Outra alternativa
+    // Dados.findOne({_id: req.params.id}).then((Dados) => {
+    //     if (!Dados) {
     //         return res.status(404).send();
     //     }
-    //     res.send(modelo);
+    //     res.send(Dados);
 
     // }).catch((error) => {
     //     res.status(500).send(error);
     // })
 })
 
-// Editar uma entrada específica da rota /modelo, baseado no id da entrada
+// Editar uma entrada específica da rota /dados, baseado no id da entrada
 // Utilizar verificação middleware de autenticação para permitir a entrada na rota  
-app.patch("/modelo/:id", AuthMiddleware, async (req,res) => {
+app.patch("/dados/:id", AuthMiddleware, async (req,res) => {
     try{
-        const modelo = await Modelo.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        if (!modelo){
+        const dados = await Dados.findByIdAndUpdate(req.params.id, req.body, {new: true});
+        if (!dados){
             return res.status(404)
         }
-        res.status(200).send(modelo);
+        res.status(200).send(dados);
     } catch(error) {
         res.status(500).send(error);
     }
 })
 
-// Deletar uma entrada específica da rota /modelo, baseado no id da entrada
+// Deletar uma entrada específica da rota /dados, baseado no id da entrada
 // Utilizar verificação middleware de autenticação para permitir a entrada na rota  
-app.delete("/modelo/:id", AuthMiddleware, async (req,res) => {
+app.delete("/dados/:id", AuthMiddleware, async (req,res) => {
     try{
-        const modelo = await Modelo.findByIdAndDelete(req.params.id);
-        if (!modelo){
+        const dados = await Dados.findByIdAndDelete(req.params.id);
+        if (!dados){
             return res.status(404).send();
         }
-        res.send(modelo);
+        res.send(dados);
     } catch(error) {
         res.status(500).send(error);
     }
@@ -132,6 +133,7 @@ app.post("/featured-image/:id", [AuthMiddleware, upload.single("featuredImage")]
     }
 })
 
+// Receber múltiplas imagens simultaneamente
 app.post("/images/:id", upload.array("images"), (req,res) => {
     const {files} = req;
 

@@ -15,6 +15,7 @@ const crypto = require("crypto");
 // Importar ferramenta para mandar email de recuperação
 const Mailer = require("../../modules/Mailer")
 
+// Gerar token de autenticação
 const generateToken = params => {
     return jwt.sign(
         params,
@@ -77,7 +78,7 @@ router.post("/login", (req,res) => {
     })
 })
 
-// Enviar um email de recuperação de senha
+// Enviar um email de recuperação de senha - Inoperante
 router.post("/forgot-password", (req,res) => {
     const {email} = req.body;
 
@@ -121,6 +122,7 @@ router.post("/forgot-password", (req,res) => {
     })
 })
 
+// Alterar senha utilizando o token enviado por email - Inoperante
 router.post("/reset-password", (req,res) => {
     const {email, token, newPassword} = req.body;
 
