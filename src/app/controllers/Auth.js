@@ -24,7 +24,7 @@ const generateToken = (params) => {
 
 // Fazer registro do usuário
 router.post("/register", (req, res) => {
-  const { email, name, password } = req.body;
+  const { name, email, password } = req.body;
   User.findOne({ email })
     .then((userData) => {
       if (userData) {
