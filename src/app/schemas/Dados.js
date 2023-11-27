@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
 
 const DadosSchema = new mongoose.Schema({
-  name: String,
+  nome: String,
   criador: String,
   descricao: String,
-  contato: String,
+  telefone: String,
   endereco: String,
-  featuredImage: {
+  categoria: String,
+  imagemPrincipal: {
     type: String,
     //required: true
   },
-  images: [{ type: String }],
+  outrasImagens: [{ type: String }],
 });
 
 const Dados = mongoose.model("Dados", DadosSchema);

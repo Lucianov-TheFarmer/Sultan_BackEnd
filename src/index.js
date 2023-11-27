@@ -6,9 +6,10 @@ const express = require("express");
 const app = express();
 
 // Importar controladores
-const DadosController = require("./app/controllers/DadosController");
+const DadosController = require("./app/controllers/Dados");
 const Auth = require("./app/controllers/Auth");
 const Uploads = require("./app/controllers/Uploads");
+const Feedback = require("./app/controllers/Feedback");
 
 // Importar cors
 const bodyParser = require("body-parser");
@@ -30,6 +31,7 @@ const port = process.env.port || 8081;
 app.use("/", DadosController);
 app.use("/auth", Auth);
 app.use("/uploads", Uploads);
+app.use("/feedback", Feedback);
 
 // Inicializar server
 app.listen(port, (req, res) => {

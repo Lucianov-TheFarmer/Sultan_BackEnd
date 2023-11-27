@@ -24,12 +24,12 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     select: false,
   },
-  featuredImage: {
+  image: {
     type: String,
     //required: true
   },
-  images: [{ type: String }],
-  description: { type: String },
+  telefone: { type: String },
+  descricao: { type: String },
   cadastros: [{ type: String }],
   createdAt: {
     type: Date,
@@ -38,6 +38,10 @@ const UserSchema = new mongoose.Schema({
 });
 
 UserSchema.pre("save", function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
   bcrypt
     .hash(this.password, 10)
     .then((hash) => {

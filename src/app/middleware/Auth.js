@@ -16,7 +16,6 @@ function Verificar(req, res, next) {
     }
 
     jwt.verify(token, authConfig.secret, (err, decoded) => {
-      console.log(decoded);
       if (err) {
         return res.status(401).send({ error: "No valid token provided" });
       } else {
