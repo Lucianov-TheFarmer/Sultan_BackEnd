@@ -21,3 +21,9 @@
 - Para instalar as dependências, digite "npm install" e execute
 - Certifique-se de que o serviço MongoDB Server (MongoDB) está em execução. Isso pode ser feito ao abrir o Executar (Windows + R) e digitar "services.msc"
 - Em seguida, execute no terminal: "npm run dev"
+
+## Considerações finais
+
+- Deixo aqui meu mais sincero e afetuoso sentimento de gratidão pela oportunidade.
+
+“Ninguém é tão grande que não possa aprender, nem tão pequeno que não possa ensinar.” - Logosofia  
